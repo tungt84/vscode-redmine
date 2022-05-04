@@ -4,10 +4,10 @@ import { RedmineServer } from "../redmine/redmine-server";
 import { Issue } from "../redmine/models/issue";
 import { IssueStatus as RedmineIssueStatus } from "../redmine/models/issue-status";
 import { TimeEntryActivity } from "../redmine/models/time-entry-activity";
-
 interface TimeEntryActivityItem extends vscode.QuickPickItem {
   activity: TimeEntryActivity;
 }
+
 
 export class IssueController {
   constructor(private issue: Issue, private redmine: RedmineServer) {}
@@ -132,12 +132,12 @@ export class IssueController {
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Issue #${this.issue.id}</title>
+      
   </head>
   <body>
-      <h1>#${this.issue.id} [${this.issue.tracker}] (${this.issue.status}) ${this.issue.subject}</h1>
-      <h2>Assign to: ${this.issue.author}</h2>
+      <h1>#${this.issue.id} [${this.issue.tracker.name}] (${this.issue.status.name}) ${this.issue.subject}</h1>
+      <h2>Assign to: ${this.issue.assigned_to ? this.issue.assigned_to.name : "no one"}</h2>
       <div>${this.issue.description}<div>
-  </body>
   </html>`;
   }
   private async viewDetail(){
