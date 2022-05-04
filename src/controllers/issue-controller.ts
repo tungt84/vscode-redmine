@@ -125,7 +125,30 @@ export class IssueController {
       this.chooseTimeEntryType(activities.time_entry_activities);
     });
   }
-
+  private getWebviewContent() {
+    return `<!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Issue #${this.issue.id}</title>
+  </head>
+  <body>
+      <h1>#${this.issue.id} [${this.issue.tracker}] (${this.issue.status}) ${this.issue.subject}</h1>
+      <h2>Assign to: ${this.issue.author}</h2>
+      <div>${this.issue.description}<div>
+  </body>
+  </html>`;
+  }
+  private async viewDetail(){
+    const panel = vscode.window.createWebviewPanel(
+      `issue#${this.issue.id}`,
+      `Issue #${this.issue.id}`,
+      vscode.ViewColumn.One,
+      {}
+    );
+    panel.webview.html = this.getWebviewContent();
+  }
   private async quickUpdate() {
     let memberships: Membership[];
     try {
@@ -247,6 +270,13 @@ export class IssueController {
               "Change assignee, status and leave a message in one step",
             detail: issueDetails,
           },
+          {
+            action: "viewDetail",
+            label: "View detail",
+            description:
+              "View detail of a issue",
+            detail: issueDetails,
+          },
         ],
         {
           placeHolder: "Pick an action to do",
@@ -266,6 +296,9 @@ export class IssueController {
           }
           if (option.action === "quickUpdate") {
             this.quickUpdate();
+          }
+          if (option.action === "viewDetail") {
+            this.viewDetail();
           }
         },
         (_error) => {
