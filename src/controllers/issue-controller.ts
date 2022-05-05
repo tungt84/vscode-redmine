@@ -7,6 +7,7 @@ import { TimeEntryActivity } from "../redmine/models/time-entry-activity";
 interface TimeEntryActivityItem extends vscode.QuickPickItem {
   activity: TimeEntryActivity;
 }
+const wikity = require('wikity');
 
 
 export class IssueController {
@@ -137,7 +138,7 @@ export class IssueController {
   <body>
       <h1>#${this.issue.id} [${this.issue.tracker.name}] (${this.issue.status.name}) ${this.issue.subject}</h1>
       <h2>Assign to: ${this.issue.assigned_to ? this.issue.assigned_to.name : "no one"}</h2>
-      <div>${this.issue.description}<div>
+      <div>${wikity.parse(this.issue.description)}<div>
   </html>`;
   }
   private async viewDetail(){
