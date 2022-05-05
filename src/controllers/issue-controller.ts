@@ -138,6 +138,10 @@ export class IssueController {
   <body>
       <h1>#${this.issue.id} [${this.issue.tracker.name}] (${this.issue.status.name}) ${this.issue.subject}</h1>
       <h2>Assign to: ${this.issue.assigned_to ? this.issue.assigned_to.name : "no one"}</h2>
+      <h2>Created on: ${this.issue.created_on}</h2>
+      <h2>Update on: ${this.issue.updated_on}</h2>
+      <h2>Author: ${this.issue.author}</h2>
+      <h2>Description</h2>
       <div>${wikity.parse(this.issue.description)}<div>
   </html>`;
   }
