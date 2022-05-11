@@ -4,6 +4,7 @@ import { RedmineServer } from "../redmine/redmine-server";
 import { Issue } from "../redmine/models/issue";
 import { IssueStatus as RedmineIssueStatus } from "../redmine/models/issue-status";
 import { TimeEntryActivity } from "../redmine/models/time-entry-activity";
+
 interface TimeEntryActivityItem extends vscode.QuickPickItem {
   activity: TimeEntryActivity;
 }
@@ -142,8 +143,8 @@ export class IssueController {
       <div>Update on: ${this.issue.updated_on}</div>
       <div>Author: ${this.issue.author.name}</div>
       <div>Description</div>
-      <div>${wikity.parse(this.issue.description)}<div>
-  </html>`;
+      <div style="white-space:pre-wrap; word-wrap:break-word" >${wikity.parse(this.issue.description)}<div>
+    </html>`;
   }
   private async viewDetail(){
     const panel = vscode.window.createWebviewPanel(
